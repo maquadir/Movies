@@ -9,7 +9,7 @@ When clicking on a movie item, we should show the movie detail screen using the 
 # Installation
 Clone the repo and install the dependencies.
 
-      https://github.com/maquadir/Movies/tree/master
+      https://github.com/maquadir/Movies.git
 
 # Architecture and Design
 The application follows an MVVM architecture as given below
