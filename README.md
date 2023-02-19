@@ -9,7 +9,7 @@ When clicking on a movie item, we should show the movie detail screen using the 
 # Installation
 Clone the repo and install the dependencies.
 
-      git@github.com:maquadir/unitapp.git
+      https://github.com/maquadir/Movies/tree/master
 
 # Architecture and Design
 The application follows an MVVM architecture as given below
@@ -21,8 +21,6 @@ The application follows an MVVM architecture as given below
 - Since the app is going to fetch from json url .We have to add the following internet permissions to the manifest file.
     
         <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 ### Material Styling
 - A progress bar is displayed during the async JSON read operation.
@@ -36,26 +34,25 @@ We have declared a Properties API interface to invoke the JSON url using Retrofi
                 .build().create(PropertiesApi::class.java)
 
 ### Model
-A Modelcontains all the data classes, database classes, API and repository.
-A Property data class is created using "JSON to Kotlin class" plugin to map the JSON data to Kotlin. A Properties Service class to handle api requests and a repository takes care of how data will be fetched from the api.
-              
-              data class Property (
-                     val ad_id : Int,
-                     var data: data
-                  )
+A Model contains all the data classes.
+PopularMovies and MovieDetails data classes are created using "JSON to Kotlin class" plugin to map the JSON data to Kotlin. A ApiService class to handle api requests and a repository takes care of how data will be fetched from the api.
                   
-              val propertiesService = PropertiesService()
-              val repository = PropertiesRepository(propertiesService)
+              val apiService = ApiService()
+              val repository = MoviesRepository(apiService)
 
 ### View Model
 We set up a view model factory which is responsible for creating view models.It contains the data required in the View and translates the data which is stored in Model which then can be present inside a View. ViewModel and View are connected through Databinding and the observable Livedata.
+We are using a shared Viewmodel for the 2 fragment screens.
 
 ### Coroutines
 Coroutines are a great way to write asynchronous code that is perfectly readable and maintainable. We use it to perform a job of reading data from the JSON url.
 
 ### View
 It is the UI part that represents the current state of information that is visible to the user.A Recycler View displays the data read from the JSON. We setup a recycler view adapter to take care of displaying the data on the view.
-We use Glide to display profile image using view binding
+We use Glide to display profile image using view binding. 
+
+### Nav Graph
+We are using a navigation graph to navigate between the 2 fragments representing popular movies screen and movie details screen.
 
 ### Dependency Injection
 Constructor dependency injection has been used at multiple instances.It allows for less code overall when trying to get reference to services you share across classes, and decouples components nicely in general
@@ -64,12 +61,15 @@ Constructor dependency injection has been used at multiple instances.It allows f
 The View Binding Library is an Android Jetpack library that allows you to create class files for the XML layouts.All the UIView elements in the layout are binded to the class program through view binding.
 
 # Testing
-New to MVVM Unit testing. It may not run successfully. One of the things i am looking forward to learn in a commercial space.
+Unit tests for the ApiService, Repository, Controllers & VM.
 
 # Screenshot
 
-<img width="314" alt="image" src="https://user-images.githubusercontent.com/19331629/165742648-09d4e84d-0bbc-4353-97c3-ad34c8674e97.png">
+<img width="360" alt="Screenshot 2023-02-19 at 11 15 54 pm" src="https://user-images.githubusercontent.com/19331629/219947356-a7926e7a-c4a8-488e-863b-72e977a44599.png">
 
-<img width="321" alt="image" src="https://user-images.githubusercontent.com/19331629/165748603-fcb63536-fa9b-4c40-a077-4c68ac14ceec.png">
+
+<img width="367" alt="Screenshot 2023-02-19 at 11 15 42 pm" src="https://user-images.githubusercontent.com/19331629/219947363-738767aa-e835-418f-ada0-ef0f2b2d4c61.png">
+
+
 
 
